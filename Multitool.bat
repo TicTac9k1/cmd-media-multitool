@@ -84,6 +84,15 @@ echo  This assumes you have MPC-HC installed ( https://github.com/clsid2/mpc-hc/
 set /p twitch= Paste Twitch URL here:
 "C:\Program Files\MPC-HC\mpc-hc64.exe" %twitch%
 pause
+GOTO end
+
+:twitchdl
+echo.
+echo  This saves a livestream locally
+set /p twitchdl= Paste Twitch URL here: 
+youtube-dl.exe %twitchdl%
+pause
+GOTO end
 
 :end
 echo Script has ended.
