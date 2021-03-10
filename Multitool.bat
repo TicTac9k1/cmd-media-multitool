@@ -9,7 +9,7 @@ echo.
 
 :start
 echo.
-echo  Arguments: 720p, 360p, mp3, playlist, adx, cut, twitch
+echo  Arguments: 720p, 360p, mp3, playlist, adx, cut, twitch, twitchdl
 SET choice=
 SET /p choice= What would you like to do? [arguments]: 
 IF '%choice%'=='720p' GOTO 720p
@@ -19,6 +19,7 @@ IF '%choice%'=='playlist' GOTO playlist
 IF '%choice%'=='adx' GOTO adx
 IF '%choice%'=='cut' GOTO cut
 IF '%choice%'=='twitch' GOTO twitch
+IF '%choice%'=='twitchdl' GOTO twitchdl
 IF NOT '%choice%'=='' GOTO start
 IF '%choice%'=='' GOTO start
 
