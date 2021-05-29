@@ -1,0 +1,15 @@
+This bat script makes it easier for you to use certain programs that can perform basic tasks quickly and effectively.
+
+It can downscale video media to 720p or 360p
+It can convert files to mp3 or mp4
+It can open a Twitch stream in a media player to bypass the purple screen
+It can make some 4chan webms, though it probably can do a better job if I knew the proper settings
+It can download any files from an open directory on a website like http://game.joowz.nl automatically
+
+youtube-dl and ffmpeg require to be in the same directory as the script
+wget and mpc must be installed in their default locations in order for it to work
+
+youtube-dl.exe - https://github.com/ytdl-org/youtube-dl/releases
+ffmpeg.exe - https://github.com/BtbN/FFmpeg-Builds/releases
+wget for Windows - http://gnuwin32.sourceforge.net/packages/wget.htm - Required to download entire open directories
+MPC-HC - https://github.com/clsid2/mpc-hc/releases - Required to open Twitch livestreams through a media player, this script relies by default on MPC-HC but you can make it work with other supported programs
