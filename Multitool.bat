@@ -85,10 +85,11 @@ set /p starttime= Enter start time in HH:MM:SS and subtract 5 seconds:
 set /p runtime= Enter the run time duration in MM:SS: 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg.exe -ss %starttime% -i %inputfile% -to 00:%runtime% -c copy -strict -2 "%outputfile%.mp4"
-echo Output file is: %basename%.mp4
-echo If output file is simply called ".mp4" I will rename this file to Output_%Random%.mp4
-move .mp4 Output_%RANDOM%.mp4
+set randomizer=%RANDOM%
+ffmpeg.exe -ss %starttime% -i %inputfile% -to 00:%runtime% -c copy -strict -2 "TRIMMED_%outputfile%.mp4"
+echo Output file is: TRIMMED-%basename%.mp4
+echo If output file is not named as the input file I will rename this file to TRIMMED - %randomizer%.mp4
+move TRIMMED_.mp4 "TRIMMED - %randomizer%.mp4"
 pause
 GOTO mediaconvertoptions
 
@@ -97,10 +98,11 @@ echo.
 set /p inputfile= 360p - Enter the filepath name (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg.exe -i %inputfile% -vf scale=-1:360 "%outputfile%_360p.mp4"
-echo Output file is: %basename%.mp4
-echo If output file is simply called ".mp4" I will rename this file to Output_%Random%.mp4
-move _360p.mp4 Output_%RANDOM%_360p.mp4
+set randomizer=%RANDOM%
+ffmpeg.exe -i %inputfile% -vf scale=-1:360 "360P_%outputfile%.mp4"
+echo Output file is: 360P_%basename%.mp4
+echo If output file is not named as the input file I will rename this file to 360P - %randomizer%.mp4
+move 360P_.mp4 "360P - %randomizer%.mp4"
 pause
 GOTO mediaconvertoptions
 
@@ -109,10 +111,11 @@ echo.
 set /p inputfile= 720p - Enter the filepath name (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg.exe -i %inputfile% -vf scale=-1:720 "%outputfile%_720p.mp4"
-echo Output file is: %basename%.mp4
-echo If output file is simply called ".mp4" I will rename this file to Output_%Random%.mp4
-move _720p.mp4 Output_%RANDOM%_720p.mp4
+set randomizer=%RANDOM%
+ffmpeg.exe -i %inputfile% -vf scale=-1:720 "720P_%outputfile%.mp4"
+echo Output file is: 720P_%basename%.mp4
+echo If output file is not named as the input file I will rename this file to 720P - %randomizer%.mp4
+move 720P_.mp4 "720P - %randomizer%.mp4"
 pause
 GOTO mediaconvertoptions
 
@@ -121,10 +124,11 @@ echo.
 set /p inputfile= MP3 - Enter the filepath name (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg.exe -i %inputfile% -codec:a libmp3lame -q:a 0 "%outputfile%_mp3.mp3"
-echo Output file is: %basename%_mp3.mp3
-echo If output file is simply called "_mp3.mp3" I will rename this file to Output_%Random%.mp3
-move _mp3.mp3 Output_%RANDOM%_mp3.mp3
+set randomizer=%RANDOM%
+ffmpeg.exe -i %inputfile% -codec:a libmp3lame -q:a 0 "MP3_%outputfile%.mp3"
+echo Output file is: MP3_%basename%.mp3
+echo If output file is not named as the input file I will rename this file to MP3 - %randomizer%.mp3
+move MP3_.mp3 "MP3 - %randomizer%.mp3"
 pause
 GOTO mediaconvertoptions
 
@@ -133,10 +137,11 @@ echo.
 set /p inputfile= MP4 - Enter the filepath name (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg.exe -i %inputfile% "%outputfile%_mp4.mp4"
-echo Output file is: %basename%_mp4.mp4
-echo If output file is simply called "_mp4.mp4" I will rename this file to Output_%Random%.mp4
-move _mp4.mp4 Output_%RANDOM%_mp4.mp4
+set randomizer=%RANDOM%
+ffmpeg.exe -i %inputfile% "MP4_%outputfile%.mp4"
+echo Output file is: MP4_%basename%.mp4
+echo If output file is not named as the input file I will rename this file to MP4 - %randomizer%.mp4
+move MP4_.mp4 "MP4 - %randomizer%.mp4"
 pause
 GOTO mediaconvertoptions
 
@@ -154,10 +159,11 @@ echo  This will make a video webm suitable for 4chan with a general duration of 
 set /p inputfile= 4chan - Enter the filepath name (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
-ffmpeg -i %inputfile% -c:v libvpx -c:a libvorbis -crf 4 -b:a 96K -filter:v scale=512:-1:force_original_aspect_ratio=decrease,fps=25 "%outputfile%.webm"
+set randomizer=%RANDOM%
+ffmpeg -i %inputfile% -c:v libvpx -c:a libvorbis -crf 4 -b:a 96K -filter:v scale=512:-1:force_original_aspect_ratio=decrease,fps=25 "4CHAN-WSG_%outputfile%.webm"
 echo Output file is: %basename%
-echo If output file is simply called ".webm" I will rename this file to Output_%Random%.webm
-move .webm Output_%RANDOM%.webm
+echo If output file is simply called "4CHAN-WSG_.webm" I will rename this file to 4CHAN-WSG - %randomizer%.webm
+move 4CHAN-WSG_.webm "4CHAN-WSG - %randomizer%.webm"
 pause
 GOTO 4chanoptions
 
@@ -180,11 +186,12 @@ set /p inputfile= 4chan - Enter the filepath name (Drag and drop):
 set /p imagefile= Replace video with image small res image (Drag and drop): 
 for /F "delims=" %%i in (%inputfile%) do set basename=%%~ni
 set outputfile=%basename%
+set randomizer=%RANDOM%
 ffmpeg.exe -i %inputfile% -codec:a libmp3lame -q:a 0 "%outputfile%_mp3.mp3"
-ffmpeg -framerate 1 -i %imagefile% -i "%outputfile%_mp3.mp3" -c:v vp8 -c:a libvorbis -filter:v scale=512:-1:force_original_aspect_ratio -crf 4 -b:a 160K -fs 4096K "%basename%.webm"
+ffmpeg -framerate 1 -i %imagefile% -i "%outputfile%_mp3.mp3" -c:v vp8 -c:a libvorbis -filter:v scale=512:-1:force_original_aspect_ratio -crf 4 -b:a 160K -fs 4096K "4CHAN-YGYL_%basename%.webm"
 echo Output file is: %basename%
-echo If output file is called simply ".webm" I will rename this file to Output_%Random%.webm
-move .webm Output_%RANDOM%.webm
+echo If output file is called simply "4CHAN-YGYL_.webm" I will rename this file to 4CHAN-YGYL - %randomizer%.webm
+move 4CHAN-YGYL_.webm "4CHAN-YGYL - %randomizer%.webm"
 del "%outputfile%_mp3.mp3"
 pause
 GOTO 4chanoptions
